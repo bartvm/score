@@ -168,7 +168,7 @@
           );
           const scores = integers.map((integer, i) => Number(integer.value) * 10 + Number(fractionals[i].value));
           let total = scores.reduce((totalScore, score) => totalScore + score, 0);
-          [Math.min, Math.max).forEach((minMax) => {
+          [Math.min, Math.max].forEach((minMax) => {
             minMaxScore = minMax(...scores);
             scoreIndex = scores.findIndex((score) => score == minMaxScore);
             integers[scoreIndex].classList.add("removed");
