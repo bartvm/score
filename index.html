@@ -78,15 +78,17 @@
     <input class="integer" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
     <span>.</span>
     <input class="fractional" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
-    <p>-</p>
+    <p><strong>-</strong></p>
 
     <button type="reset">Reset</button>
   </form>
   <script>
-    function calculate(inputs) {
-      document.querySelector("p").innerHTML = "-";
+    function reset() {
+      document.querySelector("strong").innerHTML = "-";
       inputs.forEach((input) => input.classList.remove("removed"))
+    }
 
+    function calculate(inputs) {
       let ready = inputs.every((input) => input.value.length > 0);
       if (ready) {
         const integers = Array.from(
@@ -104,7 +106,7 @@
           fractionals[scoreIndex].classList.add("removed");
           total = total - minMaxScore;
         });
-        document.querySelector("p").innerHTML = `${total
+        document.querySelector("strong").innerHTML = `${total
           .toString()
           .slice(0, -1)}.${total.toString().slice(-1)}`;
       }
@@ -114,6 +116,7 @@
     inputs.forEach(function (input) {
       input.addEventListener("input", function () {
         this.value = this.value.slice(0, this.maxLength);
+        reset();
         calculate(inputs);
 
         if (this.value.length > 0) {
@@ -130,9 +133,8 @@
     });
 
     document.querySelector("button").addEventListener("click", function () {
-      inputs.forEach((input) => input.classList.remove("removed"))
+      reset();
       inputs[0].focus();
-      document.querySelector("p").innerHTML = "-";
     });
   </script>
 </body>
