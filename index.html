@@ -166,27 +166,21 @@
           const fractionals = Array.from(
             document.querySelectorAll("input.fractional")
           );
-          const scores = integers.map(function (integer, i) {
-            return Number(integer.value) * 10 + Number(fractionals[i].value);
+          const scores = integers.map((integer, i) => Number(integer.value) * 10 + Number(fractionals[i].value);
+          let total = scores.reduce((totalScore, score) => totalScore + score, 0);
+          [Math.min, Math.max).forEach((minMax) => {
+            minMaxScore = minMax(...scores);
+            scoreIndex = scores.findIndex((score) => score == minMaxScore);
+            integers[scoreIndex].classList.add("removed");
+            fractionals[scoreIndex].classList.add("removed");
+            total = total - minMaxScore;
           });
-          let total = scores.reduce((totalScore, score) => {
-            return totalScore + score;
-          }, 0);
-          let minScore = Math.min(...scores);
-          let maxScore = Math.max(...scores);
-          integers.forEach((integer, i) => {
-            let score = Number(integer.value) * 10 + Number(fractionals[i].value);
-            if (score == maxScore || score == minScore) {
-              integer.classList.add(".removed");
-              fractionals[i].classList.add(".removed");
-            }
-          });
-          total = total - minScore - maxScore;
           document.querySelector("p").innerHTML = `${total
             .toString()
             .slice(0, -1)}.${total.toString().slice(-1)}`;
         } else {
           document.querySelector("p").innerHTML = "-";
+          inputs.forEach((input) => input.classList.remove("removed"))
         }
       }
 
