@@ -189,15 +189,6 @@
               return;
             }
             next.focus();
-          } else {
-            let prev = event.target.previousElementSibling;
-            if (prev == null) {
-                return;
-            }
-            if (prev.tagName == "SPAN") {
-              prev = prev.previousElementSibling;
-            }
-            prev.focus();
           }
         });
       });
