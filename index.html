@@ -204,6 +204,7 @@
       });
 
       document.querySelector("button").addEventListener("click", function () {
+        inputs.forEach((input) => input.classList.remove("removed"))
         inputs[0].focus();
         document.querySelector("p").innerHTML = "-";
       });
