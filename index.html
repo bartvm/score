@@ -1,213 +1,140 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1"
-    />
 
-    <title>Karate point system calculator</title>
-    <meta name="description" content="Karate point system calculator." />
-    <meta name="author" content="Bart van Merriënboer" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
-    />
+  <title>Karate point system calculator</title>
+  <meta name="description" content="Karate point system calculator." />
+  <meta name="author" content="Bart van Merriënboer" />
 
-    <style>
-      #calculator {
-        display: grid;
-        grid-template-columns: 5fr 1fr 5fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
-      }
+  <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css" />
 
-      p,
-      button {
-        grid-column-start: 1;
-        grid-column-end: 4;
-      }
+  <style>
+    #calculator {
+      display: grid;
+      grid-template-columns: 5fr 1fr 5fr;
+      grid-template-rows: 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
+    }
 
-      span {
-        display: flex;
-        align-items: flex-end;
-        justify-content: center;
-        /* Matches new.css */
-        margin-bottom: 0.5rem;
-        padding: 6px 12px;
-      }
+    p,
+    button {
+      grid-column-start: 1;
+      grid-column-end: 4;
+    }
 
-      p {
-        text-align: center;
-        font-size: 3em;
-        margin: 0.5em;
-      }
+    span {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      /* Matches new.css */
+      margin-bottom: 0.5rem;
+      padding: 6px 12px;
+    }
 
-      input,
-      button {
-        font-size: 2em;
-      }
-      
-      input.removed {
-        text-decoration:line-through;
-      }
-      
-      input.integer {
-        text-align: right;
-      }
-    </style>
-  </head>
+    p {
+      text-align: center;
+      font-size: 3em;
+      margin: 0.5em;
+    }
 
-  <body>
-    <form id="calculator">
-      <input
-        class="integer"
-        type="number"
-        min="0"
-        max="9"
-        inputmode="decimal"
-        maxlength="1"
-      />
-      <span>.</span>
-      <input
-        class="fractional"
-        type="number"
-        min="0"
-        max="9"
-        inputmode="decimal"
-        maxlength="1"
-      />
+    input,
+    button {
+      font-size: 2em;
+    }
 
-      <input
-        class="integer"
-        type="number"
-        min="0"
-        max="9"
-        inputmode="decimal"
-        maxlength="1"
-      />
-      <span>.</span>
-      <input
-        class="fractional"
-        type="number"
-        min="0"
-        max="9"
-        inputmode="decimal"
-        maxlength="1"
-      />
+    input.removed {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
 
-      <input
-        class="integer"
-        type="number"
-        min="0"
-        max="9"
-        inputmode="decimal"
-        maxlength="1"
-      />
-      <span>.</span>
-      <input
-        class="fractional"
-        type="number"
-        min="0"
-        max="9"
-        inputmode="decimal"
-        maxlength="1"
-      />
+    input.integer {
+      text-align: right;
+    }
+  </style>
+</head>
 
-      <input
-        class="integer"
-        type="number"
-        min="0"
-        max="9"
-        inputmode="decimal"
-        maxlength="1"
-      />
-      <span>.</span>
-      <input
-        class="fractional"
-        type="number"
-        min="0"
-        max="9"
-        inputmode="decimal"
-        maxlength="1"
-      />
+<body>
+  <form id="calculator">
+    <input class="integer" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
+    <span>.</span>
+    <input class="fractional" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
 
-      <input
-        class="integer"
-        type="number"
-        min="0"
-        max="9"
-        inputmode="decimal"
-        maxlength="1"
-      />
-      <span>.</span>
-      <input
-        class="fractional"
-        type="number"
-        min="0"
-        max="9"
-        inputmode="decimal"
-        maxlength="1"
-      />
-      <p>-</p>
+    <input class="integer" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
+    <span>.</span>
+    <input class="fractional" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
 
-      <button type="reset">Reset</button>
-    </form>
-    <script>
-      function calculate(inputs) {
-        let ready = inputs.every((input) => input.value.length > 0);
-        if (ready) {
-          const integers = Array.from(
-            document.querySelectorAll("input.integer")
-          );
-          const fractionals = Array.from(
-            document.querySelectorAll("input.fractional")
-          );
-          const scores = integers.map((integer, i) => Number(integer.value) * 10 + Number(fractionals[i].value));
-          let total = scores.reduce((totalScore, score) => totalScore + score, 0);
-          [Math.min, Math.max].forEach((minMax) => {
-            minMaxScore = minMax(...scores);
-            scoreIndex = scores.findIndex((score) => score == minMaxScore);
-            integers[scoreIndex].classList.add("removed");
-            fractionals[scoreIndex].classList.add("removed");
-            total = total - minMaxScore;
-          });
-          document.querySelector("p").innerHTML = `${total
-            .toString()
-            .slice(0, -1)}.${total.toString().slice(-1)}`;
-        } else {
-          document.querySelector("p").innerHTML = "-";
-          inputs.forEach((input) => input.classList.remove("removed"))
-        }
-      }
+    <input class="integer" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
+    <span>.</span>
+    <input class="fractional" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
 
-      const inputs = Array.from(document.querySelectorAll("input"));
-      inputs.forEach(function (input) {
-        input.addEventListener("input", function () {
-          this.value = this.value.slice(0, this.maxLength);
-          calculate(inputs);
+    <input class="integer" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
+    <span>.</span>
+    <input class="fractional" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
 
-          if (this.value.length > 0) {
-            let next = event.target.nextElementSibling;
-            if (next.tagName == "SPAN") {
-              next = next.nextElementSibling;
-            }
-            if (next.tagName != "INPUT") {
-              return;
-            }
-            next.focus();
-          }
+    <input class="integer" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
+    <span>.</span>
+    <input class="fractional" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
+    <p>-</p>
+
+    <button type="reset">Reset</button>
+  </form>
+  <script>
+    function calculate(inputs) {
+      document.querySelector("p").innerHTML = "-";
+      inputs.forEach((input) => input.classList.remove("removed"))
+
+      let ready = inputs.every((input) => input.value.length > 0);
+      if (ready) {
+        const integers = Array.from(
+          document.querySelectorAll("input.integer")
+        );
+        const fractionals = Array.from(
+          document.querySelectorAll("input.fractional")
+        );
+        const scores = integers.map((integer, i) => Number(integer.value) * 10 + Number(fractionals[i].value));
+        let total = scores.reduce((totalScore, score) => totalScore + score, 0);
+        [Math.min, Math.max].forEach((minMax) => {
+          minMaxScore = minMax(...scores);
+          scoreIndex = scores.findIndex((score) => score == minMaxScore);
+          integers[scoreIndex].classList.add("removed");
+          fractionals[scoreIndex].classList.add("removed");
+          total = total - minMaxScore;
         });
-      });
+        document.querySelector("p").innerHTML = `${total
+          .toString()
+          .slice(0, -1)}.${total.toString().slice(-1)}`;
+      }
+    }
 
-      document.querySelector("button").addEventListener("click", function () {
-        inputs.forEach((input) => input.classList.remove("removed"))
-        inputs[0].focus();
-        document.querySelector("p").innerHTML = "-";
+    const inputs = Array.from(document.querySelectorAll("input"));
+    inputs.forEach(function (input) {
+      input.addEventListener("input", function () {
+        this.value = this.value.slice(0, this.maxLength);
+        calculate(inputs);
+
+        if (this.value.length > 0) {
+          let next = event.target.nextElementSibling;
+          if (next.tagName == "SPAN") {
+            next = next.nextElementSibling;
+          }
+          if (next.tagName != "INPUT") {
+            return;
+          }
+          next.focus();
+        }
       });
-    </script>
-  </body>
+    });
+
+    document.querySelector("button").addEventListener("click", function () {
+      inputs.forEach((input) => input.classList.remove("removed"))
+      inputs[0].focus();
+      document.querySelector("p").innerHTML = "-";
+    });
+  </script>
+</body>
+
 </html>
