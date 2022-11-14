@@ -38,7 +38,7 @@
     p {
       text-align: center;
       font-size: 3em;
-      margin: 0.5em;
+      margin: auto;
     }
 
     input,
@@ -83,6 +83,32 @@
     <button type="reset">Reset</button>
   </form>
   <script>
+    const inputs = Array.from(document.querySelectorAll("input"));
+
+    inputs.forEach(function (input) {
+      input.addEventListener("input", function () {
+        this.value = this.value.slice(0, this.maxLength);
+        
+        calculate(inputs);
+
+        if (this.value.length > 0) {
+          let next = event.target.nextElementSibling;
+          if (next.tagName == "SPAN") {
+            next = next.nextElementSibling;
+          }
+          if (next.tagName != "INPUT") {
+            return;
+          }
+          next.focus();
+        }
+      });
+    });
+
+    document.querySelector("button").addEventListener("click", function () {
+      reset();
+      inputs[0].focus();
+    });
+ 
     function reset() {
       document.querySelector("strong").innerHTML = "-";
       inputs.forEach((input) => input.classList.remove("removed"))
@@ -90,6 +116,7 @@
 
     function calculate(inputs) {
       let ready = inputs.every((input) => input.value.length > 0);
+      reset();
       if (ready) {
         const integers = Array.from(
           document.querySelectorAll("input.integer")
@@ -111,31 +138,6 @@
           .slice(0, -1)}.${total.toString().slice(-1)}`;
       }
     }
-
-    const inputs = Array.from(document.querySelectorAll("input"));
-    inputs.forEach(function (input) {
-      input.addEventListener("input", function () {
-        this.value = this.value.slice(0, this.maxLength);
-        reset();
-        calculate(inputs);
-
-        if (this.value.length > 0) {
-          let next = event.target.nextElementSibling;
-          if (next.tagName == "SPAN") {
-            next = next.nextElementSibling;
-          }
-          if (next.tagName != "INPUT") {
-            return;
-          }
-          next.focus();
-        }
-      });
-    });
-
-    document.querySelector("button").addEventListener("click", function () {
-      reset();
-      inputs[0].focus();
-    });
   </script>
 </body>
 
