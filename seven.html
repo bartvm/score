@@ -26,7 +26,7 @@
     #calculator {
       display: grid;
       grid-template-columns: 5fr 1fr 5fr;
-      grid-template-rows: 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
     }
 
     p,
@@ -90,11 +90,19 @@
     <input class="integer" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
     <span>.</span>
     <input class="fractional" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
+
+    <input class="integer" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
+    <span>.</span>
+    <input class="fractional" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
+
+    <input class="integer" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
+    <span>.</span>
+    <input class="fractional" type="number" min="0" max="9" inputmode="decimal" maxlength="1" />
     <p id="score"><strong>-</strong></p>
 
     <button type="reset">Reset</button>
   </form>
-  <p><a href="./seven.html">Switch</a> to 7 judges.</p>
+  <p><a href="./index.html">Switch</a> to 5 judges.</p>
   <script>
     const inputs = Array.from(document.querySelectorAll("input"));
 
