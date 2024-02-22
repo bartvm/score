@@ -25,7 +25,7 @@
   <style>
     #calculator {
       display: grid;
-      grid-template-columns: 5fr 1fr 5fr;
+      grid-template-columns: minmax(350px, 5fr) minmax(50px, 1fr) minmax(350px, 5fr);
       grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
     }
 
@@ -35,17 +35,11 @@
       grid-column-end: 4;
     }
 
-    input {
-      /* new.css sets max-width: 750px on body */
-      max-width: 350px;
-    }
-
     span {
       display: flex;
       align-items: flex-end;
       justify-content: center;
       /* Matches new.css */
-      max-width: 50px;
       margin-bottom: 0.5rem;
       padding: 6px 12px;
     }
